@@ -48,6 +48,33 @@ char *ret_str2() {
 	return p;
 }
 
+/* static, in .data section.
+ * Okay to return
+ *
+ *	 $ readelf -p .data a.out 
+ *	
+ *	 String dump of section '.data':
+ *	   [    10]  hello world
+ *	
+ */
+char *ret_str3() {
+	static char p[] = "hello world";
+	return p;
+}
+ 
+/* static, in .rodata section, okay to return.
+ *
+ * 	$ readelf -p .rodata a.out 
+ *
+ * 	String dump of section '.rodata':
+ * 	  [     8]  where am I?
+ * 	  [    18]  hello .rodata
+ */
+const char *ret_str4() {
+	static const char p[] = "hello .rodata";
+	return p;
+}
+
 int main() {
 	/* okay */
 	char *p = ret_str();
@@ -59,4 +86,13 @@ int main() {
 
 	/* problematic: pointing into deallcated stack frame */
 	char *p2 = ret_str2();
+
+	/* Okay. */
+	char *p3 = ret_str3();
+
+	/* okay.
+	 * Don't forget the const qualifier,
+	 * or you are semantically able to modify the .rodata section.
+	 */
+	const char *p4 = ret_str4();
 }
