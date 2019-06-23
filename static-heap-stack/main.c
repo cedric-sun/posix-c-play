@@ -52,6 +52,11 @@ int main() {
 	/* okay */
 	char *p = ret_str();
 
-	/* problematic */
+	/* But you can't modify .rodata content.
+	 * The following wil cause SIGSEGV:
+	 */
+	p[3] = 's';
+
+	/* problematic: pointing into deallcated stack frame */
 	char *p2 = ret_str2();
 }
