@@ -1,6 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// return type: a pointer to a int array of length 2
+int (*foo())[2]() {
+
+}
+
 int main() {
 
 /* ------------------ Pointer and const ------------------*/
@@ -38,6 +43,9 @@ int main() {
 	 * the array will be allocated right on stack.
 	 */
 	int *ptr_arr[N];
+
+    /* Pointer to an array*/
+    int (*arr_ptr)[N];
 
 /* ------------------ Function pointer ------------------*/
 	
